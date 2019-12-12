@@ -1,8 +1,3 @@
-<?php
-    session_start();
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,28 +6,32 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="style/style.css">
-    <title>Add user</title>
+    <link rel="stylesheet" type="text/css" href="../style/style.css">
+    <title>Update user</title>
 </head>
 <body>
-    <?php
-        if (isset($_GET['success'])) {
-            echo "<p class=\"success\">Utilisateur \"" . $_GET['user'] . "\" créé avec succès</p>";
-        } 
-        ?>
-        <h3>Créer un nouveau compte utilisateur</h3>
-        <form method="post" action="createUser.php">
+        <h3>Modifier compte utilisateur</h3>
+        <form method="post" action="../back/updateUser.php">
+            <div class="form-group none">
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="id" value=<?="" .$_GET['id']."" ?>>
+        </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">Nom</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="name">
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="name" value=<?="" .$_GET['name']."" ?>>
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Mot de passe</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+                <input type="text" class="form-control" id="exampleInputPassword1" name="password" value=<?="" .$_GET['password']."" ?>>
+            </div>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Niveau d'autorisation</label>
+                <input type="text" class="form-control" id="exampleInputPassword1" name="rank_id" value=<?="" .$_GET['rank_id']."" ?>>
+                <small> 1 = admin, 2 = utilisateur, si vous entrez une autre valeur que 1 ou 2, le trigger mettra le choix 2 par default</small>
             </div>
             <button type="submit" class="btn btn-primary">Valider</button>
         </form>
-        <form action="productList.php">
+        <form action="adminUser.php">
                 <button type="submit" class="btn btn-primary">Retour</button>
             </form>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"

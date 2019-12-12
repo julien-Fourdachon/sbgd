@@ -2,7 +2,7 @@
 
 $name = $_POST['name'];
 $password = $_POST['password'];
-$rank_id = 8; //checking trigger in user table
+$rank_id = intval($_POST['rank_id']);
 try {
     $db = new PDO('mysql:host=localhost;dbname=test', "test", "test");
 } catch (PDOException $e) {
@@ -16,6 +16,6 @@ $stmt->bindParam(':password', $password, PDO::PARAM_STR);
 $stmt->bindParam(':rank_id', $rank_id, PDO::PARAM_INT);
 $stmt->execute();
 
-header("location: addUserForm.php?success&user=".$name);
+header("location: ../front/addUserForm.php?success&user=".$name);
 
 

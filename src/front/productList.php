@@ -3,6 +3,8 @@ session_start();
 
 $name = $_POST["name"];
 $password = $_POST["password"];
+$_SESSION['total'] = 0;
+
 try {
     $db = new PDO('mysql:host=localhost;dbname=test', "test", "test");
 } catch (PDOException $e) {
@@ -12,6 +14,11 @@ try {
 
 $user = $db->prepare("SELECT * FROM user");
 $product = $db->prepare("SELECT * FROM product");
+
+if(isset($_GET['buy'])) {
+    $_SESSION['total'] += $_GET['buy'];
+}
+var_dump($_SESSION['total']);
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +29,7 @@ $product = $db->prepare("SELECT * FROM product");
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="style/style.css">
+    <link rel="stylesheet" type="text/css" href="../style/style.css">
     <title>shopList</title>
 </head>
 <body>
@@ -32,14 +39,14 @@ $product = $db->prepare("SELECT * FROM product");
             <?php
                 if($_SESSION['name']) {
                     echo "<div class=\"admin-buttons\">";
-                    echo "<a href=\"addProduct.php\" type=\"button\" class=\"btn btn-info\">Ajouter un article</a>";
-                    if ($_SESSION['rank_id']) {
-                        echo "<a href=\"addUserForm.php\" type=\"button\" class=\"btn btn-info\">Créer utilisateur</a>";
-                    } else {
-                        echo "<a href=\"userAdmin.php\" type=\"button\" class=\"btn btn-info\">Gérer les utilisateurs</a>";
-                    } 
-                    echo "<a href=\"logout.php\" type=\"button\" class=\"btn btn-info\">Déconnexion</a>";
+                    echo "<a href=\"addProductForm.php\" type=\"button\" class=\"btn btn-info\">Ajouter un article</a>";
+                    if ($_SESSION['rank_id'] == 1) {
+                        echo "<a href=\"adminUser.php\" type=\"button\" class=\"btn btn-info\">Gérer les utilisateurs</a>";
+                    }
+                    echo "<a href=\"../back/logout.php\" type=\"button\" class=\"btn btn-info\">Déconnexion</a>";
                     echo "</div>";
+                } else {               
+                    echo "<a href=\"../../index.php\" type=\"button\" class=\"btn btn-info\">Se connecter</a>";
                 }
             ?>
         </div>
@@ -50,16 +57,18 @@ $product = $db->prepare("SELECT * FROM product");
                 $productExist = $product->fetchAll();
                 foreach($productExist as $product) {
                 echo"<div class=\"content\">
-                        <div class=\"pic\"><img src=\"" . $product["picture"] . "\"/></div>
+                        <div class=\"pic\"><img src=\"" . $product["picture"] . "\" alt=\"image de " . $product['title'] . "\"/></div>
                         <div class=\"description\"><p class=\"title\">" . $product["title"] . "</p>" . $product["description"] . "</div>
                         <div class=\"price\">
                         <div>" . $product["price"] . " euros</div> 
-                        <div><p class=\"buy\">Ajouter au panier</p></div>  
+                        <div><a href=\"productList.php?buy=" . $product['price'] . "\" class=\"buy\">Ajouter au panier</a></div>  
                         </div>
                     </div>";
-                    if($_SESSION['rank_id']) {
-                        echo "<button type=\"button\" class=\"btn btn-success\">Modifier</button>
-                        <button type=\"button\" class=\"btn btn-danger\">Supprimer</button>";
+                    if($_SESSION['rank_id'] === 1) {
+                        echo "<div class=\"button-admin\">
+                        <a href=\"updateProductForm.php?id=" . $product["id"] . "&title=" . $product["title"] . "&description=" . $product["description"] . "&picture=" . $product["picture"] . "&price=" . $product["price"] . "\" type=\"button\" class=\"btn btn-success\">Modifier</a>
+                        <a href=\"../back/deleteProduct.php?id=" . $product["id"] . "\"type=\"button\" class=\"btn btn-danger\">Supprimer</a>
+                        </div>";
                     }
                 }
             }

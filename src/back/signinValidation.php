@@ -15,13 +15,13 @@ $req = $db->query('SELECT * FROM user');
 while($user = $req->fetch()) {
     if ($user['name'] === $name && $user['password'] === $password) {
         $_SESSION['name'] = $name;
-        $_SESSION['rank_id'] = $user['rank_id'];
+        $_SESSION['rank_id'] = intval($user['rank_id']);
         $_SESSION['id'] = $user['id'];
-        header("location: productList.php");
+        header("location: ../front/productList.php");
     }
 }
 if ($_SESSION['name']  === null) {
-    header("location: index.php?error");
+    header("location: ../../index.php?error");
 }
 $req->closeCursor();
 

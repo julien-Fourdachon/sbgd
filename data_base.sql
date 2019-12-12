@@ -33,7 +33,7 @@ CREATE TABLE `product` (
   PRIMARY KEY (`id`),
   KEY `fk_owner_id` (`owner_id`),
   CONSTRAINT `fk_owner_id` FOREIGN KEY (`owner_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +42,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (1,'Cerises','https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.a4jOBSDS7LCknC-fIQRCUgHaE0%26pid%3DApi&f=1','Voici venu le temps des cerises',3,'2019-12-09 19:26:11',NULL),(2,'bananes',NULL,'description',5,'2019-12-11 14:33:58',1),(3,'bananes',NULL,'description',5,'2019-12-11 14:34:43',14);
+INSERT INTO `product` VALUES (1,'Cerises','https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.a4jOBSDS7LCknC-fIQRCUgHaE0%26pid%3DApi&f=1','Voici venu le temps des cerises',3,'2019-12-09 19:26:11',NULL),(4,'Fruits de la passion','https://www.sicoly.fr/files/images/photos_fruits/Fruit-de-la-Passion-jaune.jpg','Les meilleurs fruits qu\'ils sont trop bons quand on les mange',12,'2019-12-12 08:53:58',1);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -94,7 +94,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'admin','admin',NULL),(14,'julien','julien',NULL);
+INSERT INTO `user` VALUES (1,'admin','admin',1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -106,7 +106,7 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER before_inser_user BEFORE INSERT ON user FOR EACH ROW BEGIN IF NEW.role != 0 AND NEW.role != 1 AND NEW.role != true and NEW.role != false THEN SET NEW.role = false; END IF; END */;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `before_insert_rank_id` BEFORE INSERT ON `user` FOR EACH ROW BEGIN IF NEW.rank_id != 2 AND NEW.rank_id != 1 THEN SET NEW.rank_id = 2; END IF; END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -122,4 +122,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-11 16:35:30
+-- Dump completed on 2019-12-12  9:56:41
