@@ -2,6 +2,8 @@
 
 ## Database
 name-> test
+username-> test
+password -> test
 3 tables = user, rank and product.
 user and rank are joined with rank_id column (1 for admin and 2 for classic user) => used in page displaying all users
 user and product are joined with id(user) and owner_id(product)  => not used yet in application
