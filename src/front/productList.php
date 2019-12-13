@@ -3,7 +3,8 @@ session_start();
 
 $name = $_POST["name"];
 $password = $_POST["password"];
-$_SESSION['total'] = 0;
+$_SESSION['total'];
+$connect = false;
 
 try {
     $db = new PDO('mysql:host=localhost;dbname=test', "test", "test");
@@ -13,12 +14,17 @@ try {
 }
 
 $user = $db->prepare("SELECT * FROM user");
-$product = $db->prepare("SELECT * FROM product");
+$product = $db->prepare("SELECT * FROM product LIMIT 10");
 
 if(isset($_GET['buy'])) {
     $_SESSION['total'] += $_GET['buy'];
 }
-var_dump($_SESSION['total']);
+if(($_SESSION['total'] != 0) && (!isset($_SESSION['name']))) {
+    $connect = false;
+} else if (($_SESSION['total'] != 0) && (isset($_SESSION['name']))) {
+    $connect = true;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -37,6 +43,11 @@ var_dump($_SESSION['total']);
         <div class="admin-header">
             <h3>Voici la shopping list du jour</h3>
             <?php
+                if($connect) {
+                    echo "<div class=\"total\">Panier: " . $_SESSION['total'] . "€</div>";
+                } else if(!$connect && $_SESSION['total'] != 0) {
+                    echo "<div class=\"total\">Vous devez avoir un compte pour acheter sur le site, connectez vous ou demandez à l'admin</div>";
+                }
                 if($_SESSION['name']) {
                     echo "<div class=\"admin-buttons\">";
                     echo "<a href=\"addProductForm.php\" type=\"button\" class=\"btn btn-info\">Ajouter un article</a>";

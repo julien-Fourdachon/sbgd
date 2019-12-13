@@ -6,7 +6,6 @@ $description = $_POST['description'];
 $price = intval($_POST['price']);
 $id = $_POST['id'];
 
-var_dump($_POST);
 try {
     $db = new PDO('mysql:host=localhost;dbname=test', "test", "test");
 } catch (PDOException $e) {

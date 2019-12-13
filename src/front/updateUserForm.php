@@ -26,7 +26,7 @@
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Niveau d'autorisation</label>
-                <input type="text" class="form-control" id="exampleInputPassword1" name="rank_id" value=<?="" .$_GET['rank_id']."" ?>>
+                <input type="text" class="form-control" id="exampleInputPassword1" name="rank_id">
                 <small> 1 = admin, 2 = utilisateur, si vous entrez une autre valeur que 1 ou 2, le trigger mettra le choix 2 par default</small>
             </div>
             <button type="submit" class="btn btn-primary">Valider</button>

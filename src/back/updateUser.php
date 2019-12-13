@@ -18,4 +18,4 @@ $stmt->bindParam(':new_rank_id', $rank_id, PDO::PARAM_INT);
 $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 $stmt->execute();
 
-header("location: ../front/adminUser.php?updateSuccess");
+header("location: ../front/adminUser.php?updateSuccess=" . $rank_id);

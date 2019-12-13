@@ -33,7 +33,7 @@ CREATE TABLE `product` (
   PRIMARY KEY (`id`),
   KEY `fk_owner_id` (`owner_id`),
   CONSTRAINT `fk_owner_id` FOREIGN KEY (`owner_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +42,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (1,'Cerises','https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.a4jOBSDS7LCknC-fIQRCUgHaE0%26pid%3DApi&f=1','Voici venu le temps des cerises',3,'2019-12-09 19:26:11',NULL),(4,'Fruits de la passion','https://www.sicoly.fr/files/images/photos_fruits/Fruit-de-la-Passion-jaune.jpg','Les meilleurs fruits qu\'ils sont trop bons quand on les mange',12,'2019-12-12 08:53:58',1);
+INSERT INTO `product` VALUES (1,'Cerises','https://external-content.duckduckgo.com/iu/?u=https://tse3.mm.bing.net/th?id=OIP.a4jOBSDS7LCknC-fIQRCUgHaE0','Ca c\'est de la cerise, en plus ca tombe bien c\'est la pleine saison!',32,'2019-12-09 19:26:11',NULL),(2,'Bananes','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5FrVWrtRUblRTnQEk6IQFYJwjFGmR3aTwYdAXQanm3SoCfq6O','Les meilleures bananes du monde, il s\'agit de celles qui ont tournÃ©es dans tous les mario kart !!! ',65,'2019-12-12 16:00:34',NULL),(3,'Fraises','https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.yJ2NhZsa8Nk54fSi1s5ZWgHaEK%26pid%3DApi&f=1','Elles sont bonnes mes fraises en plus c\'est la saison',41,'2019-12-13 08:06:11',NULL);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -66,7 +66,7 @@ CREATE TABLE `rank` (
 
 LOCK TABLES `rank` WRITE;
 /*!40000 ALTER TABLE `rank` DISABLE KEYS */;
-INSERT INTO `rank` VALUES (1,'admin'),(2,'utilisateur');
+INSERT INTO `rank` VALUES (1,'administrateur'),(2,'utilisateur');
 /*!40000 ALTER TABLE `rank` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -85,7 +85,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`),
   KEY `rank_id` (`rank_id`),
   CONSTRAINT `user_ibfk_1` FOREIGN KEY (`rank_id`) REFERENCES `rank` (`rank_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -94,7 +94,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'admin','admin',1);
+INSERT INTO `user` VALUES (1,'admin','admin',1),(2,'julien','julien',2),(3,'test','test',2);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -106,7 +106,61 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `before_insert_rank_id` BEFORE INSERT ON `user` FOR EACH ROW BEGIN IF NEW.rank_id != 2 AND NEW.rank_id != 1 THEN SET NEW.rank_id = 2; END IF; END */;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER before_inset_rank_id BEFORE INSERT
+ON user FOR EACH ROW
+BEGIN
+    IF NEW.rank_id != 1
+    AND NEW.rank_id != 2 
+      THEN
+        SET NEW.rank_id = 2;
+    END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER before_insert_rank_id BEFORE INSERT
+ON user FOR EACH ROW
+BEGIN
+    IF NEW.rank_id != 1
+    AND NEW.rank_id != 2
+      THEN
+        SET NEW.rank_id = 2;
+    END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER before_update_rank_id BEFORE UPDATE
+ON user FOR EACH ROW
+BEGIN
+    IF NEW.rank_id != 1
+    AND NEW.rank_id != 2
+      THEN
+        SET NEW.rank_id = 2;
+    END IF;
+END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -122,4 +176,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-12  9:56:41
+-- Dump completed on 2019-12-13 10:14:51

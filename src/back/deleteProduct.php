@@ -11,5 +11,4 @@ try {
 
 $deleteProduct = $db->prepare("DELETE FROM product WHERE id = " . $_GET['id']);
 $deleteProduct->execute();
-var_dump($_GET['id']);
 header("location: ../front/productList.php?deleteSuccess");
