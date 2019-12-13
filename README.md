@@ -1,6 +1,7 @@
 # sbgd
 
 ## Database
+file-> data_base.sql
 name-> test
 username-> test
 password -> test
